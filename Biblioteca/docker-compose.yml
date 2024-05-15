@@ -1,0 +1,31 @@
+version: '3'
+services:
+  servicio1:
+    build: ./servicio1
+    ports:
+      - "3001:3001"
+    depends_on:
+      - servicio3
+  servicio2:
+    build: ./servicio2
+    ports:
+      - "3002:3002"
+    depends_on:
+      - servicio1
+      - servicio3
+  servicio3:
+    build: ./servicio3
+    ports:
+      - "3003:3003"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
